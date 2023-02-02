@@ -50,12 +50,35 @@ function cashRegister(price, cash, cid) {
 
   }
 
-  console.log(amountArr);
+  //   const denominations = 
+  // [
+  //   ["ONE HUNDRED", 100], 
+  // ]
+  // becomes 
+  // const denominations = 
+  // [
+  //   ["ONE HUNDRED", 100, total in cid, notes/coins in cid,?], 
+  // ]
+
+  // console.log(amountArr);
 
   // Iterate through denominations and check if change is possible...
 
+  let temp = changeDue;
+  let cashiersHand = {};
+
   for (let i = 0; i < denominations.length; i++) {
     console.log(denominations[i]);
+    while (temp >= denominations[i][1]) {
+      for (let i = 0; i < cid.length; i++) {
+        if (denominations[i][0] === cid[i][0]) {
+
+        }
+      }
+    }
+    if (temp === 0) {
+      break;
+    }
   }
 
 
