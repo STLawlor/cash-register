@@ -2,9 +2,13 @@
 
 function cashRegister(price, payment, cid) {
   const sumOfCID = totalInRegister(cid)
+
   const changeDue = payment - price
+
   if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] }
+
   if (sumOfCID < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] }
+
   // need to work on the value of cid for this condition
   if (sumOfCID === changeDue) return { status: "CLOSED", change: cid }
 
