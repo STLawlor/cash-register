@@ -1,9 +1,34 @@
+const denominations = 
+[
+  ["ONE HUNDRED", 100], 
+  ["TWENTY", 20],
+  ["TEN", 10],
+  ["FIVE", 5],
+  ["ONE", 1],
+  ["QUARTER", 0.25],
+  ["DIME", 0.1],
+  ["NICKEL", 0.05],
+  ["PENNY", 0.01],
+]
+
+const amounts = {
+  'PENNY': 0.01,
+  'NICKEL': 0.05,
+  'DIME': 0.1,
+  'QUARTER': 0.25,
+  'ONE': 1,
+  'FIVE': 5,
+  'TEN': 10,
+  'TWENTY': 20,
+  'ONE HUNDRED': 100
+}
+
 function cashRegister(price, cash, cid) {
   // find change needed
-  const changeDue = payment - price
+  const changeDue = cash - price;
 
   //1.return if not enough payment
-  if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] };
+  if (cash < price) return { status: "INCORRECT_PAYMENT", change: [] };
 
 
   // find total in cash register 
@@ -26,6 +51,12 @@ function cashRegister(price, cash, cid) {
   }
 
   console.log(amountArr);
+
+  // Iterate through denominations and check if change is possible...
+
+  for (let i = 0; i < denominations.length; i++) {
+    console.log(denominations[i]);
+  }
 
 
   //otherwise return change
@@ -50,17 +81,6 @@ cashRegister(19.5, 20, [
   ["ONE HUNDRED", 100],
 ]);
 
-const amounts = {
-  'PENNY': 0.01,
-  'NICKEL': 0.05,
-  'DIME': 0.1,
-  'QUARTER': 0.25,
-  'ONE': 1,
-  'FIVE': 5,
-  'TEN': 10,
-  'TWENTY': 20,
-  'ONE HUNDRED': 100
-}
 
 /********************************Mohammad Hussain *****************************/
 
