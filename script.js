@@ -1,32 +1,20 @@
 function cashRegister(price, cash, cid) {
   // find change needed
-  let changeTotal = cash - price;
+  const changeDue = payment - price
 
-  //1. declare object and return if not enough payment
-  let obj = { status: 'INCORRECT_PAYMENT', change: [] };
-  if (cash < price) { return obj };
+  //1.return if not enough payment
+  if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] };
+
 
   // find total in cash register 
-  let cidTotal = 0;
-  for (let i = 0; i < cid.length; i++) {
-    cidTotal += cid[i][1];
-  }
-
-  cidTotal = cidTotal.toFixed(2);
+  const cidTotal = totalInRegister(cid);
 
   //2. return if not enough cid for change
+  if (cidTotal < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
 
-  if (changeTotal > cidTotal) {
-    obj.status = 'INSUFFICIENT_FUNDS';
-    return obj;
-  }
 
-  //return if change needed is same as total as cid
-  if (changeTotal === cidTotal) {
-    obj.status = 'CLOSED';
-    obj.change = cid;
-    return obj;
-  }
+  //return if change is same as total as cid
+  if (cidTotal === changeDue) return { status: "CLOSED", change: cid };
 
 
   //translate cid array to amounts 
@@ -75,22 +63,23 @@ const amounts = {
 }
 
 /********************************Mohammad Hussain *****************************/
-/*
-function cashRegister(price, payment, cid) {
-  const sumOfCID = totalInRegister(cid)
 
-  const changeDue = payment - price
+// ADDED INTO MAIN FUNCTION
+// function cashRegister(price, payment, cid) {
+//   // const sumOfCID = totalInRegister(cid)
 
-  if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] }
+//   // const changeDue = payment - price
 
-  if (sumOfCID < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] }
+//   // if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] }
 
-  // need to work on the value of cid for this condition
-  if (sumOfCID === changeDue) return { status: "CLOSED", change: cid }
+//   // if (sumOfCID < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] }
 
-  // need to work on the return value
-  return { status: "OPEN", change: cid }
-}
+//   // need to work on the value of cid for this condition
+//   // if (sumOfCID === changeDue) return { status: "CLOSED", change: cid }
+
+//   // need to work on the return value
+//   return { status: "OPEN", change: cid }
+// }
 
 
 
@@ -103,5 +92,5 @@ function totalInRegister(twoDimensionsalArr) {
 
   return sum.toFixed(2)
 }
-*/
+
 /********************************Mohammad Hussain *****************************/
