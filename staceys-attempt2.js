@@ -13,7 +13,6 @@ const denominations = [
 function cashRegister(price, cash, cid) {
   // find change needed
   let changeDue = cash - price;
-  //changeDue = changeDue.toFixed(2);
   
   // return if no change is needed
   if (changeDue === 0) { return { status: "OPEN", change: [] } };
