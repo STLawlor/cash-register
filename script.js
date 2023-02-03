@@ -1,6 +1,5 @@
-const denominations = 
-[
-  ["ONE HUNDRED", 100], 
+const denominations = [
+  ["ONE HUNDRED", 100],
   ["TWENTY", 20],
   ["TEN", 10],
   ["FIVE", 5],
@@ -9,131 +8,120 @@ const denominations =
   ["DIME", 0.1],
   ["NICKEL", 0.05],
   ["PENNY", 0.01],
-]
+];
 
-const amounts = {
-  'PENNY': 0.01,
-  'NICKEL': 0.05,
-  'DIME': 0.1,
-  'QUARTER': 0.25,
-  'ONE': 1,
-  'FIVE': 5,
-  'TEN': 10,
-  'TWENTY': 20,
-  'ONE HUNDRED': 100
-}
+// variable to store inputted cash in drawer amount
+var cashInDrawer = [
+  ["PENNY", 0],
+  ["NICKEL", 0],
+  ["DIME", 0],
+  ["QUARTER", 0],
+  ["ONE", 0],
+  ["FIVE", 0],
+  ["TEN", 0],
+  ["TWENTY", 0],
+  ["ONE HUNDRED", 0],
+];
 
 function cashRegister(price, cash, cid) {
   // find change needed
-  const changeDue = cash - price;
+  let changeDue = cash - price;
 
-  //1.return if not enough payment
+  // return if no change is needed
+  if (changeDue === 0) {
+    return { status: "OPEN", change: [] };
+  }
+
+  //1. return if not enough payment
   if (cash < price) return { status: "INCORRECT_PAYMENT", change: [] };
 
-
-  // find total in cash register 
+  // find total in cash register
   const cidTotal = totalInRegister(cid);
 
   //2. return if not enough cid for change
   if (cidTotal < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
 
-
-  //return if change is same as total as cid
+  //3. return if change is same cid total
   if (cidTotal === changeDue) return { status: "CLOSED", change: cid };
 
+  // other wise find change amounts
+  let change = findChange(changeDue, cid);
 
-  //translate cid array to amounts 
-  let amountArr = [];
-
-  for (let i = 0; i < cid.length; i++) {
-    amountArr.push(cid[i][1] / amounts[cid[i][0]]);
-
+  if (change.length === 0) {
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
   }
 
-  //   const denominations = 
-  // [
-  //   ["ONE HUNDRED", 100], 
-  // ]
-  // becomes 
-  // const denominations = 
-  // [
-  //   ["ONE HUNDRED", 100, total in cid, notes/coins in cid,?], 
-  // ]
-
-  // console.log(amountArr);
-
-  // Iterate through denominations and check if change is possible...
-
-  let temp = changeDue;
-  let cashiersHand = {};
-
-  for (let i = 0; i < denominations.length; i++) {
-    console.log(denominations[i]);
-    while (temp >= denominations[i][1]) {
-      for (let i = 0; i < cid.length; i++) {
-        if (denominations[i][0] === cid[i][0]) {
-
-        }
-      }
-    }
-    if (temp === 0) {
-      break;
-    }
-  }
-
-
-  //otherwise return change
-
-
-
-
-  //also need to check if exact change can't be given
-
+  return { status: "OPEN", change: change.reverse() };
 }
-
-// Example function call
-cashRegister(19.5, 20, [
-  ["PENNY", 1.01],
-  ["NICKEL", 2.05],
-  ["DIME", 3.1],
-  ["QUARTER", 4.25],
-  ["ONE", 90],
-  ["FIVE", 55],
-  ["TEN", 20],
-  ["TWENTY", 60],
-  ["ONE HUNDRED", 100],
-]);
-
-
-/********************************Mohammad Hussain *****************************/
-
-// ADDED INTO MAIN FUNCTION
-// function cashRegister(price, payment, cid) {
-//   // const sumOfCID = totalInRegister(cid)
-
-//   // const changeDue = payment - price
-
-//   // if (payment < price) return { status: "INCORRECT_PAYMENT", change: [] }
-
-//   // if (sumOfCID < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] }
-
-//   // need to work on the value of cid for this condition
-//   // if (sumOfCID === changeDue) return { status: "CLOSED", change: cid }
-
-//   // need to work on the return value
-//   return { status: "OPEN", change: cid }
-// }
-
-
 
 // Function to check the total in drawers
-function totalInRegister(twoDimensionsalArr) {
-  let sum = 0.0
-  twoDimensionsalArr.forEach(element => {
-    sum += parseFloat(element[1])
-  });
+function totalInRegister(cash) {
+  let sum = 0;
+  for (let i = 0; i < cash.length; i++) {
+    sum += cash[i][1];
+  }
 
-  return sum.toFixed(2)
+  return sum;
 }
 
-/********************************Mohammad Hussain *****************************/
+// Function to find change
+function findChange(changeLeft, cid) {
+  let change = [];
+  let rCid = cid.reverse();
+
+  for (let i = 0; i < denominations.length; i++) {
+    if (
+      changeLeft >= denominations[i][1] &&
+      rCid[i][1] >= denominations[i][1]
+    ) {
+      let denomsNeeded =
+        Math.floor(changeLeft / denominations[i][1]) * denominations[i][1];
+      if (denomsNeeded <= rCid[i][1]) {
+        change.push([denominations[i][0], denomsNeeded]);
+        changeLeft -= denomsNeeded;
+      } else {
+        change.push([denominations[i][0], rCid[i][1]]);
+        changeLeft -= rCid[i][1];
+      }
+      changeLeft = changeLeft.toFixed(2);
+    }
+  }
+
+  return changeLeft > 0 ? [] : change;
+}
+
+// Query to retrieve inputted values on form submit
+var input = document.getElementById(form);
+
+document.querySelector("#form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  let price = Number(document.querySelector("#price").value);
+  let amountGiven = Number(document.querySelector("#amountGiven").value);
+  cashInDrawer[8][1] = Number(document.querySelector("#hundred").value);
+  cashInDrawer[7][1] = Number(document.querySelector("#twenty").value);
+  cashInDrawer[6][1] = Number(document.querySelector("#ten").value);
+  cashInDrawer[5][1] = Number(document.querySelector("#five").value);
+  cashInDrawer[4][1] = Number(document.querySelector("#one").value);
+  cashInDrawer[3][1] = Number(document.querySelector("#quarter").value);
+  cashInDrawer[2][1] = Number(document.querySelector("#dime").value);
+  cashInDrawer[1][1] = Number(document.querySelector("#nickel").value);
+  cashInDrawer[0][1] = Number(document.querySelector("#penny").value);
+
+  let returnObj = cashRegister(price, amountGiven, cashInDrawer);
+  console.log(returnObj);
+
+  //TODO: cycle through return element and check which values can be displayed
+
+  /* note for Monday: maybe instead of filling in inputs on the html, we just cycle through the values
+  in the object change array? */
+
+  let changeArr = returnObj.change;
+  
+  // loop through array and display values
+
+  document.getElementById("status").value = returnObj.status;
+
+  // for (i of returnObj.change) {
+  //   console.log(i[0], i[1]);
+  // }
+});
