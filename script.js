@@ -12,7 +12,7 @@ const denominations = [
 
 // variable to store inputted cash in drawer amount
 
-//TODO: store cash in drawer amount and deduct in change function
+//TODO: store cash in drawer amount and deduct in change function (on v2 of files)
 var cashInDrawer = [
   ["PENNY", 1],
   ["NICKEL", 1],
@@ -41,7 +41,7 @@ function cashRegister(price, cash, cid) {
   const cidTotal = totalInRegister(cid);
 
   //2. return if not enough cid for change
-  if (cidTotal < changeDue) return { status: "INSUFFICIENT_FUNDS1", change: [] };
+  if (cidTotal < changeDue) return { status: "INSUFFICIENT_FUNDS", change: [] };
 
   //3. return if change is same cid total
   if (cidTotal === changeDue) return { status: "CLOSED", change: cid };
@@ -50,7 +50,7 @@ function cashRegister(price, cash, cid) {
   let change = findChange(changeDue, cid);
 
   if (change.length === 0) {
-    return { status: "INSUFFICIENT_FUNDS2", change: [] };
+    return { status: "INSUFFICIENT_FUNDS", change: [] };
   }
 
   return { status: "OPEN", change: change.reverse() };
@@ -94,8 +94,6 @@ function findChange(changeLeft, cid) {
 }
 
 // Query to retrieve inputted values on form submit
-var input = document.getElementById(form);
-
 document.querySelector("#form").addEventListener("submit", function (e) {
   e.preventDefault();
   let price = Number(document.querySelector("#price").value);
