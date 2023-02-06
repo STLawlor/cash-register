@@ -10,17 +10,18 @@
     <title>$$$</title>
   </head>
   <body>
-    <header>
+    <header class="p-3 text-bg-dark">
       <p>Cash Register</p>
     </header>
     <main>
       <form id="form">
+        <h3>Input</h3>
         <label>Price:</label>
         <input id="price" type="number" value="0" step="0.01" min="0"/><br /><br />
         <label>Amount Given:</label>
-        <input id="amountGiven" type="number" value="0" step="0.01" min="0" /><br /><br />
+        <input id="amountGiven" type="number" value="0" step="0.01" min="0" /><br />
         <hr>
-        <h2>Cash in Drawer</h2>
+        <h3>Cash in Drawer</h3>
         <label>ONE HUNDRED:</label>
         <input id="hundred" type="number" value="100" step="100" min="0"/><br /><br />
         <label>TWENTY:</label>
@@ -41,18 +42,18 @@
         <input id="penny" type="number" value="1" step="0.01" min="0"/><br /><br />
         <input class="btn btn-success" id="submit" type="submit" value="Submit" />
       </form>
-      
       <form>
-        <h2>Status</h2>     
+        <h3>Status</h3>     
         <label>Status:</label>
-        <input id="status" type="text" disabled/><br /><br />
+        <input id="status" type="text" disabled/><br />
         <hr>
-        <h2>Change to be Given</h2>
-        <ul id="changeList" class="alert alert-info" role="alert">
+        <h3>Change to be Given</h3>
+        <ul id="changeList" class="alert alert-success" role="alert">
+          <li>Please Submit to view change</li>
         </ul>
       </form>
     </main>
-    <footer>
+    <footer class="p-3 text-bg-dark">
       <p>
         <b>Created By: Stacey, Mohammad, Imran</b>
       </p>
